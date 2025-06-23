@@ -4,11 +4,11 @@ call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp' " OCaml LSP (view type/doc \k)
+Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'nvim-lua/plenary.nvim'  
-Plug 'nvim-telescope/telescope.nvim' " Find files and project-wide search (\p and \f)
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-tree/nvim-web-devicons'  
-Plug 'tpope/vim-fugitive' " Git stuff (diff viewer \d)
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -22,31 +22,25 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+" Key mappings
 nnoremap <silent> <leader>k :lua vim.lsp.buf.hover()<CR>
-
-lua << EOF
-require('telescope').setup{}
-EOF
-
 nnoremap <leader>p <cmd>Telescope find_files<cr>
 nnoremap <leader>f <cmd>Telescope live_grep<cr>
 nnoremap <leader>d :Gdiffsplit<CR>
 
-" Merlin 
-if executable('opam')
-  let g:opamshare=substitute(system('opam var share'),'\n$','','''')
-  if isdirectory(g:opamshare."/merlin/vim")
-    execute "set rtp+=" . g:opamshare."/merlin/vim"
-  endif
-endif
-
-" OCaml LSP
+" LSP, CMP, Telescope setup
 lua << EOF
-require'lspconfig'.ocamllsp.setup{}
-EOF
+local lspconfig = require('lspconfig')
+local cmp = require('cmp')
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-lua << EOF
-local cmp = require'cmp'
+-- OCaml LSP setup
+lspconfig.ocamllsp.setup {
+  cmd = { "ocamllsp" },
+  capabilities = capabilities,
+}
+
+-- Completion config
 cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
@@ -59,4 +53,7 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   }),
 })
+
+-- Telescope
+require('telescope').setup{}
 EOF
