@@ -27,6 +27,7 @@ nnoremap <silent> <leader>k :lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>p <cmd>Telescope find_files<cr>
 nnoremap <leader>f <cmd>Telescope live_grep<cr>
 nnoremap <leader>d :Gdiffsplit<CR>
+nnoremap <Space> i<Space><Esc>
 
 " LSP, CMP, Telescope setup
 lua << EOF

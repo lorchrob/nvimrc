@@ -1,7 +1,7 @@
 " Syntax highlighting for Lustre
 
 " Keywords
-syntax keyword lustreKeyword node returns var let tel type const 
+syntax keyword lustreKeyword node function returns var let tel type const 
 syntax keyword lustreKeyword if then else case esac
 syntax keyword lustreKeyword true false
 
@@ -10,7 +10,7 @@ syntax keyword lustreOperator and or not mod div
 syntax match lustreOperator ">=\|<=\|==\|!=\|->\|=>\|=\|+\|-\|\*\|/\|>\|<\|\^"
 
 " Types
-syntax keyword lustreType int bool real subtype
+syntax keyword lustreType int bool real subtype subrange enum map
 
 " Numbers
 syntax match   lustreNumber "\<\d\+\>"
